@@ -3,6 +3,7 @@
 # testing requirements
 pytest>=6.2.3,<6.3.0
 requests>=2.23.0,<2.24.0
+httpx
 
 # repo maintenance tooling
 black==22.3.0
