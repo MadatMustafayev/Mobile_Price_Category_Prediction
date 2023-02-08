@@ -29,13 +29,13 @@ jobs:
     <<: *prepare_venv
     working_directory: ~/project/api
     steps:
-      - checkout:
-          path: ~/project
-      - *prepare_tox
-      - run:
-          name: Runnning app tests
-          command: |
-            tox
+    - checkout:
+        path: ~/project
+    - *prepare_tox
+    - run:
+        name: Runnning app tests
+        command: |
+          tox
 
 
 workflows:
