@@ -26,13 +26,13 @@ prepare_tox: &prepare_tox
 jobs:
   test_app:
     <<: *defaults
-    # <<: *prepare_venv
+    <<: *prepare_venv
     working_directory: ~/project/api
     steps:
       - checkout:
           path: ~/project
       - *prepare_tox
-      - run:
+      - shell:
           name: Runnning app tests
           command: |
             tox
