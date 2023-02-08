@@ -14,7 +14,7 @@ prepare_venv: &prepare_venv
       python3 -m venv venv
       source venv/bin/activate
       pip install --upgrade pip
-      
+
 
 prepare_tox: &prepare_tox
   run:
@@ -25,7 +25,7 @@ prepare_tox: &prepare_tox
 
 jobs:
   test_app:
-    <<: *defaults
+    <<: *prepare_venv
     working_directory: ~/project/api
     steps:
       - checkout:
