@@ -39,7 +39,7 @@ jobs:
 
 
 workflows:
-  version: 2.0
+  version: 2
   mobile_price_prediction:
     jobs:
       - test_app:
