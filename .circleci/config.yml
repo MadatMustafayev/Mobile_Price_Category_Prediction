@@ -42,7 +42,7 @@ workflows:
   version: 2
   mobile_price_prediction:
     jobs:
-      - test_app:
+      - test_app
       # - deploy_app_to_render:
       #     requires:
       #       - test_app
