@@ -1,4 +1,4 @@
-version: 2.1
+version: 2.0
 
 
 defaults: &defaults
@@ -29,17 +29,17 @@ jobs:
     <<: *prepare_venv
     working_directory: ~/project/api
     steps:
-    - checkout:
-        path: ~/project
-    - *prepare_tox
-    - run:
-        name: Runnning app tests
-        command: |
-          tox
+      - checkout:
+          path: ~/project
+      - *prepare_tox
+      - run:
+          name: Runnning app tests
+          command: |
+            tox
 
 
 workflows:
-  version: 2.1
+  version: 2.0
   mobile_price_prediction:
     jobs:
       - test_app:
