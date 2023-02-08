@@ -38,18 +38,8 @@ jobs:
             tox
 
 
-
-tags_only: &tags_only
-  filters:
-    branches:
-      ignore: /.*/
-    tags:
-      only: /^.*/
-
-
-
 workflows:
-  version: 2
+  version: 2.1
   mobile_price_prediction:
     jobs:
       - test_app:
