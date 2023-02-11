@@ -37,24 +37,48 @@ jobs:
           command: |
             tox
 
+  build:
+    <<: *defaults
+    docker:
+      - image: docker:19.03.12
+
+    steps:
+      - checkout:
+          path: ~/project
+      - run:
+          name: Build Docker Image
+          command: |
+            docker build -t mobile_price_api_image .
+      - run:
+          name: Push Docker Image
+          command: |
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+            docker push mobile_price_api_image
+
+  deploy:
+    docker:
+      - image: docker:19.03.12
+
+    steps:
+      - run:
+          name: Deploy to Render
+          command: |
+            curl -X POST "https://api.render.com/deploy" \
+              -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $RENDER_API_KEY" \
+              -d '{"image": "mobile_price_api_image"}'
+
+
+
 
 workflows:
   version: 2
   mobile_price_prediction:
     jobs:
       - test_app
-      # - deploy_app_to_render:
-      #     requires:
-      #       - test_app
-          # filters:
-          #   branches:
-          #     only:
-          #       - main
-      # upload after git tags are created
-      # - test_and_upload_classification_model:
-      #     <<: *tags_only
-      # - deploy_app_container_in_render:
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
+      - build:
+          requires:
+            test_app
+      - deploy:
+          requires:
+            - build
