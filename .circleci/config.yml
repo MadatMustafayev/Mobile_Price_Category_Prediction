@@ -78,7 +78,7 @@ workflows:
       - test_app
       - build:
           requires:
-            test_app
+            - test_app
       - deploy:
           requires:
             - build
