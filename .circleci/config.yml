@@ -39,10 +39,10 @@ jobs:
 
   build:
     <<: *defaults
-    docker:
-      - image: docker:19.03.12
 
     steps:
+      - setup_remote_docker:
+        version: 20.10.6
       - checkout:
           path: ~/project
       - run:
@@ -56,10 +56,10 @@ jobs:
             docker push mobile_price_api_image
 
   deploy:
-    docker:
-      - image: docker:19.03.12
 
     steps:
+      - setup_remote_docker:
+        version: 20.10.6
       - run:
           name: Deploy to Render
           command: |
