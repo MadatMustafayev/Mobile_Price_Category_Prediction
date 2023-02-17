@@ -53,7 +53,7 @@ jobs:
           name: Push Docker Image
           command: |
             echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-            docker push mobile_price_api_image
+            docker push -t mobile_price_api_image
 
   deploy:
 
