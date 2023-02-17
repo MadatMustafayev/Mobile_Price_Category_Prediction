@@ -42,7 +42,7 @@ jobs:
 
     steps:
       - setup_remote_docker:
-        version: 20.10.6
+          version: 20.10.6
       - checkout:
           path: ~/project
       - run:
@@ -59,7 +59,7 @@ jobs:
 
     steps:
       - setup_remote_docker:
-        version: 20.10.6
+          version: 20.10.6
       - run:
           name: Deploy to Render
           command: |
