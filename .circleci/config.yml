@@ -50,10 +50,14 @@ jobs:
           command: |
             docker build -t mobile_price_api_image .
       - run:
+          name: Tag Image
+          command: |
+            docker tag mobile_price_api_image mustafayevm/mobile_price_api_image
+      - run:
           name: Push Docker Image
           command: |
             echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-            docker push mobile_price_api_image
+            docker push mustafayevm/mobile_price_api_image
 
   deploy:
 
