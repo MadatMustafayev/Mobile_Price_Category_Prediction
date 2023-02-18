@@ -60,6 +60,7 @@ jobs:
             docker push mustafayevm/mobile_price_api_image
 
   deploy:
+    <<: *defaults
 
     steps:
       - setup_remote_docker:
