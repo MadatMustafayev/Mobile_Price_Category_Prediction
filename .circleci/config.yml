@@ -48,7 +48,7 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
-            docker build -t mobile_price_api_image .
+            docker build mobile_price_api_image .
       - run:
           name: Push Docker Image
           command: |
