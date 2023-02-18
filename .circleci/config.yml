@@ -77,7 +77,7 @@ jobs:
                  -d '{"name":"mobile_price_api", \
                       "type":"web",\
                       "region": "us-west", \
-                      "dockerImage":"docker.io/mustafayevm/mobile_price_api_image:latest"}' \
+                      "dockerImage":"mustafayev/mobile_price_api_image:latest"}' \
                  https://render.com/api/v1/services
 
       # Verify the deployment
