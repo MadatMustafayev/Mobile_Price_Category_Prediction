@@ -48,11 +48,11 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
-            docker build mobile_price_api_image .
+            docker build -t mobile_price_api_image .
       - run:
           name: Push Docker Image
           command: |
-            echo $DOCKER_PASSWORD | docker login -t -u $DOCKER_USERNAME --password-stdin
+            echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
             docker push mobile_price_api_image
 
   deploy:
