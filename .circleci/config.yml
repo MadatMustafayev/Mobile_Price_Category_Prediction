@@ -78,21 +78,6 @@ jobs:
                       "dockerImage":"mustafayevm/mobile_price_api_image:latest"}' \
                  https://render.com/api/v1/services
 
-            while true; do
-              response=$(curl -H "Authorization: Bearer $RENDER_API_KEY" \
-                              https://render.com/api/v1/services/mobile_price_api \
-                              2> /dev/null)
-              status=$(echo $response | jq -r .status)
-              if [[ $status == "running" ]]; then
-                break
-              elif [[ $status == "failed" ]]; then
-                echo "Service deployment failed."
-                exit 1
-              fi
-              echo "Waiting for service to start..."
-              sleep 10
-            done
-
       # Verify the deployment
       - run:
           name: Verify deployment
