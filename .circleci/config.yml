@@ -43,6 +43,7 @@ jobs:
     steps:
       - setup_remote_docker:
           version: 20.10.6
+          dockerfile: Dockerfile
       - checkout:
           path: ~/project
       - run:
