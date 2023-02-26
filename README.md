@@ -19,3 +19,5 @@ Automated Testing: The project includes automated testing using the Tox library.
 Docker Building and Deployment: The project is built into a Docker container and automatically deployed to Render using CircleCI.
 
 It is just a simple achitecture that might be brought to the advanced level by modifying and adding new steps and featues.
+
+test
