@@ -42,7 +42,7 @@ jobs:
 
     steps:
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.18
           dockerfile: Dockerfile
       - checkout:
           path: ~/project
@@ -61,11 +61,21 @@ jobs:
             docker push mustafayevm/mobile_price_api_image
 
   deploy:
-    # <<: *defaults
+    <<: *defaults
 
-    # steps:
-    #   - setup_remote_docker:
-    #       version: 20.10.6
+    steps:
+      - setup_remote_docker:
+          version: 20.10.18
+      - checkout:
+          path: ~/project/
+      - node/install:
+          node-version: '16.13'
+      - run: node --version
+      - run: npm i -g @railway/cli
+      - run:
+          name: Build and run Dockerfile (see https://docs.railway.app/deploy/dockerfiles)
+          command: |
+            cd railway up --detach
 
     #   # Deploy the service to Render
     #   - run:
@@ -86,21 +96,7 @@ jobs:
     #       command: |
     #         curl -H "Authorization: Bearer $RENDER_API_KEY" \
     #              https://mobile_price_api.onrender.com/
-      <<: *defaults
-      steps:
-        - setup_remote_docker:
-            # Supported versions: https://circleci.com/docs/2.0/building-docker-images/#docker-version
-            version: 20.10.18
-        - checkout:
-            path: ~/project/
-        - node/install:
-            node-version: '16.13'
-        - run: node --version
-        - run: npm i -g @railway/cli
-        - run:
-            name: Build and run Dockerfile (see https://docs.railway.app/deploy/dockerfiles)
-            command: |
-              cd railway up --detach
+
 
 
 
