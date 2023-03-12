@@ -28,7 +28,6 @@ prepare_tox: &prepare_tox
 jobs:
   test_app:
     <<: *defaults
-    <<: *prepare_venv
     working_directory: ~/project/api
     steps:
       - checkout:
