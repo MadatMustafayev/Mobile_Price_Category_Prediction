@@ -61,31 +61,46 @@ jobs:
             docker push mustafayevm/mobile_price_api_image
 
   deploy:
-    <<: *defaults
+    # <<: *defaults
 
+    # steps:
+    #   - setup_remote_docker:
+    #       version: 20.10.6
+
+    #   # Deploy the service to Render
+    #   - run:
+    #       name: Deploy service to Render
+    #       command: |
+    #         curl -H "Authorization: Bearer $RENDER_API_KEY" \
+    #              -H "Content-Type: application/json" \
+    #              -X POST \
+    #              -d '{"name":"mobile_price_api", \
+    #                   "type":"web",\
+    #                   "region": "us-west", \
+    #                   "dockerImage":"mustafayevm/mobile_price_api_image:latest"}' \
+    #              https://render.com/api/v1/services
+
+    #   # Verify the deployment
+    #   - run:
+    #       name: Verify deployment
+    #       command: |
+    #         curl -H "Authorization: Bearer $RENDER_API_KEY" \
+    #              https://mobile_price_api.onrender.com/
+    <<: *defaults
     steps:
       - setup_remote_docker:
-          version: 20.10.6
-
-      # Deploy the service to Render
+          # Supported versions: https://circleci.com/docs/2.0/building-docker-images/#docker-version
+          version: 20.10.18
+      - checkout:
+          path: ~/project/
+      - node/install:
+          node-version: '16.13'
+      - run: node --version
+      - run: npm i -g @railway/cli
       - run:
-          name: Deploy service to Render
+          name: Build and run Dockerfile (see https://docs.railway.app/deploy/dockerfiles)
           command: |
-            curl -H "Authorization: Bearer $RENDER_API_KEY" \
-                 -H "Content-Type: application/json" \
-                 -X POST \
-                 -d '{"name":"mobile_price_api", \
-                      "type":"web",\
-                      "region": "us-west", \
-                      "dockerImage":"mustafayevm/mobile_price_api_image:latest"}' \
-                 https://render.com/api/v1/services
-
-      # Verify the deployment
-      - run:
-          name: Verify deployment
-          command: |
-            curl -H "Authorization: Bearer $RENDER_API_KEY" \
-                 https://mobile_price_api.onrender.com/
+            cd section-08-deploying-with-containers && railway up --detach
 
 
 
