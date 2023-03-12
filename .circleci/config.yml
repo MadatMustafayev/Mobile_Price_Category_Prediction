@@ -69,7 +69,7 @@ jobs:
       - setup_remote_docker:
           version: 20.10.18
       - checkout:
-          path: ~/project/
+          path: ~/project
       - node/install:
           node-version: '16.13'
       - run: node --version
