@@ -26,9 +26,10 @@ prepare_tox: &prepare_tox
       pip install --user tox
 
 jobs:
-  test_app:
+  test_ml_app:
     <<: *defaults
     working_directory: ~/project/api
+    
     steps:
       - checkout:
           path: ~/project
@@ -106,10 +107,10 @@ workflows:
   version: 2
   mobile_price_prediction:
     jobs:
-      - test_app
+      - test_ml_app
       - build:
           requires:
-            - test_app
+            - test_ml_app
       - deploy:
           requires:
             - build
