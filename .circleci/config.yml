@@ -86,21 +86,21 @@ jobs:
     #       command: |
     #         curl -H "Authorization: Bearer $RENDER_API_KEY" \
     #              https://mobile_price_api.onrender.com/
-    <<: *defaults
-    steps:
-      - setup_remote_docker:
-          # Supported versions: https://circleci.com/docs/2.0/building-docker-images/#docker-version
-          version: 20.10.18
-      - checkout:
-          path: ~/project/
-      - node/install:
-          node-version: '16.13'
-      - run: node --version
-      - run: npm i -g @railway/cli
-      - run:
-          name: Build and run Dockerfile (see https://docs.railway.app/deploy/dockerfiles)
-          command: |
-            cd section-08-deploying-with-containers && railway up --detach
+      <<: *defaults
+      steps:
+        - setup_remote_docker:
+            # Supported versions: https://circleci.com/docs/2.0/building-docker-images/#docker-version
+            version: 20.10.18
+        - checkout:
+            path: ~/project/
+        - node/install:
+            node-version: '16.13'
+        - run: node --version
+        - run: npm i -g @railway/cli
+        - run:
+            name: Build and run Dockerfile (see https://docs.railway.app/deploy/dockerfiles)
+            command: |
+              cd railway up --detach
 
 
 
