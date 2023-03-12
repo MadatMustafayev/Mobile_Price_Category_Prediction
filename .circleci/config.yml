@@ -77,7 +77,7 @@ jobs:
       - run:
           name: Build and run Dockerfile
           command: |
-            railway up --detach
+            railway link 15a39de2-0261-43f1-ba25-81112a5e08a2 && railway up --detach
 
     #   # Deploy the service to Render
     #   - run:
