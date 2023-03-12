@@ -1,5 +1,4 @@
 # Mobile Price Prediction MLOps Project
-### This projects was inspired by ML Deployment course on Udemy
 
 The project is an end-to-end machine learning project that predicts the price category of a mobile phone based on various features. The Random Forest model is used for training, and the project uses a Scikit-Learn Pipeline for data preprocessing and training and inference.For the sake of simplicity there is only one step of data preprocessing which is Feature Scaling.The model is then deployed using FastAPI and is automatically tested, built, and deployed to Render using CircleCI.
 
