@@ -62,7 +62,7 @@ jobs:
             echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
             docker push mustafayevm/mobile_price_api_image
 
-  deploy:
+  deploy_to_railway:
     <<: *defaults
 
     steps:
@@ -79,25 +79,36 @@ jobs:
           command: |
             railway link $RAILWAY_PROJECT && railway up --detach
 
-    #   # Deploy the service to Render
-    #   - run:
-    #       name: Deploy service to Render
-    #       command: |
-    #         curl -H "Authorization: Bearer $RENDER_API_KEY" \
-    #              -H "Content-Type: application/json" \
-    #              -X POST \
-    #              -d '{"name":"mobile_price_api", \
-    #                   "type":"web",\
-    #                   "region": "us-west", \
-    #                   "dockerImage":"mustafayevm/mobile_price_api_image:latest"}' \
-    #              https://render.com/api/v1/services
 
-    #   # Verify the deployment
-    #   - run:
-    #       name: Verify deployment
-    #       command: |
-    #         curl -H "Authorization: Bearer $RENDER_API_KEY" \
-    #              https://mobile_price_api.onrender.com/
+
+  deploy_to_render:
+    <<: *defaults
+
+    steps:
+      - setup_remote_docker:
+          version: 20.10.18
+      - checkout:
+          path: ~/project
+      # Deploy the service to Render
+      - run:
+          name: Deploy service to Render
+          command: |
+            curl -H "Authorization: Bearer $RENDER_API_KEY" \
+                 -H "Content-Type: application/json" \
+                 -X POST \
+                 -d '{"name":"mobile_price_api", \
+                      "type":"web",\
+                      "region": "us-west", \
+                      "dockerImage":"mustafayevm/mobile_price_api_image:latest"}' \
+                 https://render.com/api/v1/services
+
+      # Verify the deployment
+      - run:
+          name: Verify deployment
+          command: |
+            curl -H "Authorization: Bearer $RENDER_API_KEY" \
+                 https://mobile_price_api.onrender.com/
+
 
 
 
@@ -111,6 +122,9 @@ workflows:
       - build:
           requires:
             - test_ml_app
-      - deploy:
+      - deploy_to_render:
           requires:
             - build
+      - deploy_to_railway:
+          requires:
+            - test_ml_app
