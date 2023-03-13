@@ -92,15 +92,22 @@ jobs:
       # Deploy the service to Render
       - run:
           name: Deploy service to Render
+          # command: |
+          #   curl -H "Authorization: Basic $RENDER_API_KEY" \
+          #        -H "Content-Type: application/json" \
+          #        -X POST \
+          #        -d '{"name":"mobile_price_api", \
+          #             "type":"web",\
+          #             "region": "us-west", \
+          #             "dockerImage":"mustafayevm/mobile_price_api_image:latest"}' \
+          #        https://render.com/api/v1/services
+          
           command: |
-            curl -H "Authorization: Bearer $RENDER_API_KEY" \
+            curl -X POST -H "Authorization: Basic $RENDER_API_KEY" \
                  -H "Content-Type: application/json" \
-                 -X POST \
-                 -d '{"name":"mobile_price_api", \
-                      "type":"web",\
-                      "region": "us-west", \
-                      "dockerImage":"mustafayevm/mobile_price_api_image:latest"}' \
-                 https://render.com/api/v1/services
+                 -d '{"branch": "main",
+                      "docker": {"image": "mustafayevm/mobile_price_api_image:latest"}}' \
+                  https://api.render.com/v1/services/mobile-price-category/deploys
 
       # Verify the deployment
       - run:
