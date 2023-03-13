@@ -61,6 +61,11 @@ jobs:
           command: |
             echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
             docker push mustafayevm/mobile_price_api_image
+      - run:
+          name: Push to Render Container Registry
+          command: |
+            docker tag mobile_price_api_image:latest registry.render.com/mobile_price_api_image:latest
+            docker push registry.render.com/mobile_price_api_image:latest
 
   deploy_to_railway:
     <<: *defaults
@@ -103,11 +108,10 @@ jobs:
           #        https://render.com/api/v1/services
 
           command: |
-            curl -X POST -H "Authorization: Basic $RENDER_API_KEY" \
-                 -H "Content-Type: application/json" \
-                 -d '{"branch": "main",
-                      "docker": {"image": "mustafayevm/mobile_price_api_image:latest"}}' \
-                  https://api.render.com/v1/services/mobile-price-category/deploys
+            curl -X POST -H "Authorization: Bearer $RENDER_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"docker": {"image": "registry.render.com/mobile_price_api_image:latest"}}' \
+            https://api.render.com/v1/services/mobile_price_api_image/deploys
 
       # Verify the deployment
       - run:
