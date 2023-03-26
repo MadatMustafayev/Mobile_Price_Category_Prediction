@@ -81,40 +81,40 @@ jobs:
 
 
 
-  deploy_to_render:
-    <<: *defaults
+  # deploy_to_render:
+  #   <<: *defaults
 
-    steps:
-      - setup_remote_docker:
-          version: 20.10.18
-      - checkout:
-          path: ~/project
-      # Deploy the service to Render
-      - run:
-          name: Deploy service to Render
-          command: |
-            curl -H "Authorization: Basic $RENDER_API_KEY" \
-                 -H "Content-Type: application/json" \
-                 -X POST \
-                 -d '{"name":"mobile_price_api", \
-                      "type":"web",\
-                      "region": "us-west", \
-                      "dockerImage":"mustafayevm/mobile_price_api_image:latest"}' \
-                 https://render.com/api/v1/services
+  #   steps:
+  #     - setup_remote_docker:
+  #         version: 20.10.18
+  #     - checkout:
+  #         path: ~/project
+  #     # Deploy the service to Render
+  #     - run:
+  #         name: Deploy service to Render
+  #         command: |
+  #           curl -H "Authorization: Basic $RENDER_API_KEY" \
+  #                -H "Content-Type: application/json" \
+  #                -X POST \
+  #                -d '{"name":"mobile_price_api", \
+  #                     "type":"web",\
+  #                     "region": "us-west", \
+  #                     "dockerImage":"mustafayevm/mobile_price_api_image:latest"}' \
+  #                https://render.com/api/v1/services
 
-          # command: |
-          #   curl -X POST -H "Authorization: Basic $RENDER_API_KEY" \
-          #        -H "Content-Type: application/json" \
-          #        -d '{"branch": "main",
-          #             "docker": {"image": "mustafayevm/mobile_price_api_image:latest"}}' \
-          #         https://api.render.com/v1/services/mobile-price-category/deploys
+  #         # command: |
+  #         #   curl -X POST -H "Authorization: Basic $RENDER_API_KEY" \
+  #         #        -H "Content-Type: application/json" \
+  #         #        -d '{"branch": "main",
+  #         #             "docker": {"image": "mustafayevm/mobile_price_api_image:latest"}}' \
+  #         #         https://api.render.com/v1/services/mobile-price-category/deploys
 
-      # Verify the deployment
-      - run:
-          name: Verify deployment
-          command: |
-            curl -H "Authorization: Bearer $RENDER_API_KEY" \
-                 https://mobile-price-category.onrender.com
+  #     # Verify the deployment
+  #     - run:
+  #         name: Verify deployment
+  #         command: |
+  #           curl -H "Authorization: Bearer $RENDER_API_KEY" \
+  #                https://mobile-price-category.onrender.com
 
 
 
@@ -129,9 +129,9 @@ workflows:
       - build:
           requires:
             - test_ml_app
-      - deploy_to_render:
-          requires:
-            - build
+      # - deploy_to_render:
+      #     requires:
+      #       - build
       - deploy_to_railway:
           requires:
             - test_ml_app
